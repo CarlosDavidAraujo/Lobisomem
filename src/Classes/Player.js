@@ -22,16 +22,16 @@ export default class Player {
         return this.role.getName();
     }
 
-    votar(otherPlayer) {
-        otherPlayer.setVotesCount();
-    }
-
     getVotesCount() {
         return this.votesCount;
     }
     
-    setVotesCount() {
+    addVotesCount() {
         this.votesCount +=1;
+    }
+
+    clearVotes() {
+        this.votesCount = 0;
     }
 
     setProtected(protectedState) {

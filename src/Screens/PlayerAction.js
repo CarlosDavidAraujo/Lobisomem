@@ -7,22 +7,42 @@ import WereWolf from "./RoleScreens/WereWolf";
 
 
 export default function PlayerAction() {
-    const { game, setScreen } = useContext(GameContext);
+    const { game, setScreen, setLastScreen } = useContext(GameContext);
     const [currentPlayer] = useState(game.getCurrentPlayer());
 
     const roleScreens = {
-        Aldeão: <Villager currentPlayer={currentPlayer} playerList={game.getPlayers()} game={game}/>,
-        Vidente: <Seer currentPlayer={currentPlayer} playerList={game.getPlayers()}/>,
-        Lobisomem: <WereWolf currentPlayer={currentPlayer} playerList={game.getPlayers()} game={game}/>,
-        Caçador: <Hunter currentPlayer={currentPlayer} playerList={game.getPlayers()} game={game}/>
+        Aldeão:
+            <Villager
+                currentPlayer={currentPlayer}
+                playerList={game.getPlayers()}
+                game={game}
+            />,
+        Vidente:
+            <Seer currentPlayer={currentPlayer}
+                playerList={game.getPlayers()}
+            />,
+        Lobisomem:
+            <WereWolf
+                currentPlayer={currentPlayer}
+                playerList={game.getPlayers()}
+                game={game}
+            />,
+        Caçador:
+            <Hunter
+                currentPlayer={currentPlayer}
+                playerList={game.getPlayers()}
+                game={game}
+            />
     }
-    
+
     function handlePassTurn() {
         game.passToNextPlayer();
 
         if (game.noNextPlayer()) {
             game.removePlayers();
-            setScreen('day');
+            game.clearPlayersProtection();
+            setLastScreen('playerAction');
+            setScreen('villageNews');
         } else {
             setScreen('passToPlayer');
         }
@@ -33,7 +53,7 @@ export default function PlayerAction() {
             <h1>{currentPlayer.getRoleName()}</h1>
             <h2>Escolha uma habilidade</h2>
             {roleScreens[currentPlayer.getRoleName()]}
-            <button onClick={()=> handlePassTurn()}>Terminar a vez</button>
+            <button onClick={() => handlePassTurn()}>Terminar a vez</button>
         </>
     )
 }

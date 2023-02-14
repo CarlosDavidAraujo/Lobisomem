@@ -1,11 +1,11 @@
 import {GameProvider} from "./Context/GameContext";
-import Home from "./Screens/Home";
+import ScreenManager from "./Screens/ScreenManager";
 
 
 function App() {
   return (
     <GameProvider>
-      <Home/>
+      <ScreenManager/>
     </GameProvider>
   );
 }
