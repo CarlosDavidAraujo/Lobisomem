@@ -18,7 +18,7 @@ export default function Hunter({ game, playerList, currentPlayer }) {
         <div>
             {!skillWasUsed &&
                 <div>
-                    Clique em atirar, em seguida escolha o jogador que deseja eliminar, mas cuidado para não escolher um incocente.
+                    Clique em atirar, em seguida escolha o jogador que deseja eliminar, mas cuidado para não escolher um incocente. Você pode terminar a vez se não tiver certeza do seu alvo.
                     <button onClick={() => setSkillWasChosen(true)}>Atirar</button>
                     {
                         playerList.map((player, i) => (

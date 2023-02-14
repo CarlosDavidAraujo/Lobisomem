@@ -4,9 +4,11 @@ export default function WereWolf({ game, playerList, currentPlayer }) {
     const [skillWasUsed, setSkillWasUsed] = useState(false);
     const [skillWasChosen, setSkillWasChosen] = useState(false);
     const [targetPlayer, setTargetPlayer] = useState();
+    
 
     function handleDevorar() {
-        currentPlayer.getRole().devorar(targetPlayer, game);
+        const werewolf = currentPlayer.getRole();
+        werewolf.devorar(targetPlayer, game);
         setSkillWasUsed(true);
     }
 
