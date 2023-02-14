@@ -1,48 +1,41 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 export default function Hunter({ game, playerList, currentPlayer }) {
-    const [message, setMessage] = useState();
     const [skillWasUsed, setSkillWasUsed] = useState(false);
-    const [playersToChoose, setPlayersToChoose] = useState(null);
-    const [playerWasChoosen, setPlayerWasChoosen] = useState(false);
-
-    useEffect(() => {
-        if (message) {
-            game.addNews(message);
-        }
-    }, [message]);
+    const [skillWasChosen, setSkillWasChosen] = useState(false);
+    const [targetPlayer, setTargetPlayer] = useState();
 
     function handleAtirar() {
-        setPlayersToChoose(playerList);
+        currentPlayer.getRole().atirar(targetPlayer, game);
         setSkillWasUsed(true);
     }
 
-    function handleChoosePlayer(otherPlayer) {
-        setMessage(currentPlayer.getRole().atirar(otherPlayer, game));
-        setPlayerWasChoosen(true);
-    }
-
-    function isNotCurrentPlayer(player) {
-        return player.getName() !== currentPlayer.getName()
+    function isCurrentPlayer(player) {
+        return player.getName() === currentPlayer.getName();
     }
 
     return (
         <div>
             {!skillWasUsed &&
-                <>
-                    <button onClick={() => handleAtirar()}>Bala de prata</button>
-                </>
+                <div>
+                    Clique em atirar, em seguida escolha o jogador que deseja eliminar, mas cuidado para não escolher um incocente.
+                    <button onClick={() => setSkillWasChosen(true)}>Atirar</button>
+                    {
+                        playerList.map((player, i) => (
+                            !isCurrentPlayer(player) &&
+                            <button
+                                key={i}
+                                onClick={() => setTargetPlayer(player)}
+                                disabled={isCurrentPlayer(player) || !skillWasChosen}
+                                style={targetPlayer === player ? { backgroundColor: 'yellow' } : {}}
+                            >
+                                {player.getName()}
+                            </button>
+                        ))
+                    }
+                    <button onClick={() => handleAtirar()}>Confirmar</button>
+                </div>
             }
-            {playersToChoose &&
-                playersToChoose.map((player, i) =>
-                    isNotCurrentPlayer(player) && !playerWasChoosen &&
-                    < button
-                        key={i}
-                        onClick={() => handleChoosePlayer(player)}
-                    >{player.getName()}
-                    </button>
-                )
-            }
-        </div >
+        </div>
     )
 }

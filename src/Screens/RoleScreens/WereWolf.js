@@ -2,10 +2,12 @@ import { useState } from "react"
 
 export default function WereWolf({ game, playerList, currentPlayer }) {
     const [skillWasUsed, setSkillWasUsed] = useState(false);
+    const [skillWasChosen, setSkillWasChosen] = useState(false);
     const [targetPlayer, setTargetPlayer] = useState();
 
     function handleDevorar() {
         currentPlayer.getRole().devorar(targetPlayer, game);
+        setSkillWasUsed(true);
     }
 
     function isCurrentPlayer(player) {
@@ -16,29 +18,29 @@ export default function WereWolf({ game, playerList, currentPlayer }) {
         return player.getRole().getName() === "Lobisomem";
     }
 
-    function handleUseSkill() {
-        setSkillWasUsed(true);
-    }
-
     return (
         <div>
-            Clique em devorar para escolher o jogador que você quer eliminar esta noite, depois clique em confirmar e termine a vez.
-            <button onClick={() => handleUseSkill()}>Devorar</button>
-            {
-                playerList.map((player, i) => (
-                    !isCurrentPlayer(player) &&
-                    <button
-                        key={i}
-                        onClick={() => setTargetPlayer(player)}
-                        disabled={isCurrentPlayer(player) || isWerewolf(player) || !skillWasUsed}
-                        style={targetPlayer === player ? { backgroundColor: 'yellow' } : {} }
-                    >
-                        {player.getName()}
-                        {isWerewolf(player) && <span>(Lobisomem)</span>}
-                    </button>
-                ))
+            {!skillWasUsed &&
+                <div>
+                    Clique em devorar para escolher o jogador que você quer eliminar esta noite, depois clique em confirmar e termine a vez.
+                    <button onClick={() => setSkillWasChosen(true)}>Devorar</button>
+                    {
+                        playerList.map((player, i) => (
+                            !isCurrentPlayer(player) &&
+                            <button
+                                key={i}
+                                onClick={() => setTargetPlayer(player)}
+                                disabled={isCurrentPlayer(player) || isWerewolf(player) || !skillWasChosen}
+                                style={targetPlayer === player ? { backgroundColor: 'yellow' } : {}}
+                            >
+                                {player.getName()}
+                                {isWerewolf(player) && <span>(Lobisomem)</span>}
+                            </button>
+                        ))
+                    }
+                    <button onClick={() => handleDevorar()}>Confirmar</button>
+                </div>
             }
-            <button onClick={() => handleDevorar()}>Confirmar</button>
         </div>
     )
 }
