@@ -26,7 +26,7 @@ export default class Player {
         return this.votesCount;
     }
     
-    addVotesCount() {
+    addVote() {
         this.votesCount +=1;
     }
 
