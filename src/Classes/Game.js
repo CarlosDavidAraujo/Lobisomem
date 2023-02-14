@@ -155,6 +155,8 @@ export default class Game {
                 this.roles.push(role);
             }
         }
+        
+        this.roles = _.shuffle(this.roles);
     }
 
     assignRoleToPlayer(selectedRoles) {

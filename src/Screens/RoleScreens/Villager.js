@@ -7,7 +7,8 @@ export default function Villager({ game, playerList, currentPlayer }) {
     const [playerWasChoosed, setPlayerWasChoosed] = useState(false);
 
     function handleBisbilhotar() {
-        setMessage(currentPlayer.getRole().bisbilhotar(playerList, game));
+        const villager = currentPlayer.getRole();
+        setMessage(villager.bisbilhotar(playerList, game));
         setSkillWasUsed(true);
     }
 
