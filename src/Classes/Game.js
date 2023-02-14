@@ -204,12 +204,12 @@ export default class Game {
     });
   }
 
-  checkPlayersAndRolesCounts(selectedRoles) {
+  playersMatchRoles(selectedRoles) {
     //verifica se as quantidades de papéis e jogadores são iguais
-    let error = null;
+    let error = false;
     const totalRoles = Object.values(selectedRoles).reduce((a, b) => a + b, 0);
     if (totalRoles !== this.players.length) {
-      error = "A quantidade de jogadores e papéis selecionados deve ser igual";
+      error = true;
     }
     return error;
   }

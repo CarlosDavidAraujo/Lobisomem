@@ -5,6 +5,6 @@ export default function GameMenu() {
     const {setScreen} = useContext(GameContext);
 
     return (
-        <button onClick={() => setScreen('definePlayers')}>Iniciar</button>
+        <button onClick={() => setScreen('definePlayers')}>Iniciar Novo Jogo</button>
     )
 }

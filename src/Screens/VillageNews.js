@@ -1,40 +1,38 @@
-import { useContext } from "react"
+import { useContext } from "react";
 import Game from "../Classes/Game";
-import { GameContext } from "../Context/GameContext"
+import { GameContext } from "../Context/GameContext";
 
 export default function VillageNews() {
-    const { game, setGame, setScreen, lastScreen } = useContext(GameContext);
-    const winner = game.getWinnerTeam();
+  const { currentGame, setCurrentGame, setScreen, previousScreen } =
+    useContext(GameContext);
 
-    function handleEndGame() {
-        setGame(new Game());
-        setScreen('gameMenu');
-    }
+  const winner = currentGame.getWinnerTeam();
 
-    function handleScreenChange() {
-        game.clearTurnNews();
-        setScreen(lastScreen === 'votes' ? 'playerAction' : 'clock');
-    }
+  function handleEndGame() {
+    setCurrentGame(new Game());
+    setScreen("gameMenu");
+  }
 
+  function handleScreenChange() {
+    currentGame.clearTurnNews();
+    setScreen(previousScreen === "votes" ? "passToPlayer" : "clock");
+  }
 
+  return (
+    <>
+      {winner ? (
+        <button onClick={() => handleEndGame()}>Novo jogo</button>
+      ) : previousScreen === "playerAction" ? (
+        <button onClick={() => handleScreenChange()}>Reunir a vila</button>
+      ) : previousScreen === "votes" ? (
+        <button onClick={() => handleScreenChange()}>Adormecer</button>
+      ) : null}
 
-    return (
-        <>
-            {winner ? (
-                <button onClick={() => handleEndGame()}>Novo jogo</button>
-            ) : lastScreen === "playerAction" ? (
-                <button onClick={() => handleScreenChange()}>Reunir a vila</button>
-            ) : lastScreen === "votes" ? (
-                <button onClick={() => handleScreenChange()}>Adormecer</button>
-            ) : null}
-
-
-
-            <div>
-                {game.getNews().map((message, i) =>
-                    <h3>{message}</h3>
-                )}
-            </div>
-        </>
-    )
+      <div>
+        {currentGame.getNews().map((message, i) => (
+          <h3>{message}</h3>
+        ))}
+      </div>
+    </>
+  );
 }

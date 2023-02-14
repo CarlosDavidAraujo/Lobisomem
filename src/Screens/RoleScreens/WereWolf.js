@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function WereWolf({ game, playerList, currentPlayer }) {
+export default function WereWolf({ currentGame, playerList, currentPlayer }) {
     const [skillWasUsed, setSkillWasUsed] = useState(false);
     const [skillWasChosen, setSkillWasChosen] = useState(false);
     const [targetPlayer, setTargetPlayer] = useState();
@@ -8,7 +8,7 @@ export default function WereWolf({ game, playerList, currentPlayer }) {
 
     function handleDevorar() {
         const werewolf = currentPlayer.getRole();
-        werewolf.devorar(targetPlayer, game);
+        werewolf.devorar(targetPlayer, currentGame);
         setSkillWasUsed(true);
     }
 
