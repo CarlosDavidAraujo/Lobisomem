@@ -6,8 +6,8 @@ export default class Villager extends Role {
     }
 
     bisbilhotar(playerList, game) {
-        const deathChance = 1;
-        const discoverChance = 1;
+        const deathChance = 0.5;
+        const discoverChance = 0.1;
         const randomNumber = Math.random();
         let message = '';
         let discoveredWereWolf;
@@ -25,7 +25,7 @@ export default class Villager extends Role {
 
     orar(otherPlayer) {
         const chance = Math.random();
-        if (chance <= 1) {
+        if (chance <= 0.1) {
             otherPlayer.setProtected(true);
         }
     }
