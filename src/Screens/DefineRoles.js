@@ -14,7 +14,7 @@ const Grid = styled.div`
 const allRoles = ["Aldeão", "Vidente", "Lobisomem", "Caçador"];
 
 export default function DefineRoles() {
-  const { game, setScreen } = useContext(GameContext);
+  const { currentGame, setScreen } = useContext(GameContext);
   const [errorMessage, setErrorMessage] = useState();
   const [selectedRoles, setSelectedRoles] = useState({
     Aldeão: 2,
@@ -22,14 +22,14 @@ export default function DefineRoles() {
     Lobisomem: 1,
   });
 
-  function handleAddCount(roleName) {
+  function handleAddRoleCount(roleName) {
     setSelectedRoles({
       ...selectedRoles,
       [roleName]: selectedRoles[roleName] + 1,
     });
   }
 
-  function handleRemoveCount(roleName) {
+  function handleRemoveRoleCount(roleName) {
     setSelectedRoles((prevSelectedRoles) => {
       const newSelectedRoles = { ...prevSelectedRoles };
       if (newSelectedRoles[roleName] > 0) {
@@ -49,11 +49,13 @@ export default function DefineRoles() {
   }
 
   function startGame() {
-    const error = game.checkPlayersAndRolesCounts(selectedRoles);
+    const error = currentGame.playersMatchRoles(selectedRoles);
     if (error) {
-      return setErrorMessage(error);
+      return setErrorMessage(
+        "A quantidade de jogadores e papéis devems ser iguais"
+      );
     }
-    game.assignRoleToPlayer(selectedRoles);
+    currentGame.assignRoleToPlayer(selectedRoles);
     setScreen("passToPlayer");
   }
 
@@ -67,8 +69,8 @@ export default function DefineRoles() {
             key={i}
             roleName={roleName}
             count={selectedRoles[roleName]}
-            onPlus={() => handleAddCount(roleName)}
-            onMinus={() => handleRemoveCount(roleName)}
+            onPlus={() => handleAddRoleCount(roleName)}
+            onMinus={() => handleRemoveRoleCount(roleName)}
           />
         ))}
       </Grid>

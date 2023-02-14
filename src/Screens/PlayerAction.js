@@ -1,59 +1,60 @@
-import { useContext, useState } from "react"
-import { GameContext } from "../Context/GameContext"
+import { useContext, useState } from "react";
+import { GameContext } from "../Context/GameContext";
 import Hunter from "./RoleScreens/Hunter";
 import Seer from "./RoleScreens/Seer";
 import Villager from "./RoleScreens/Villager";
 import WereWolf from "./RoleScreens/WereWolf";
 
-
 export default function PlayerAction() {
-    const { game, setScreen, setLastScreen } = useContext(GameContext);
-    const [currentPlayer] = useState(game.getCurrentPlayer());
+  const { currentGame, playerList, setScreen, setPreviousScreen } =
+    useContext(GameContext);
 
-    const roleScreens = {
-        Aldeão:
-            <Villager
-                currentPlayer={currentPlayer}
-                playerList={game.getPlayers()}
-                game={game}
-            />,
-        Vidente:
-            <Seer currentPlayer={currentPlayer}
-                playerList={game.getPlayers()}
-            />,
-        Lobisomem:
-            <WereWolf
-                currentPlayer={currentPlayer}
-                playerList={game.getPlayers()}
-                game={game}
-            />,
-        Caçador:
-            <Hunter
-                currentPlayer={currentPlayer}
-                playerList={game.getPlayers()}
-                game={game}
-            />
+  const currentPlayer = currentGame.getCurrentPlayer();
+
+  const roleScreens = {
+    Aldeão: (
+      <Villager
+        currentPlayer={currentPlayer}
+        playerList={playerList}
+        currentGame={currentGame}
+      />
+    ),
+    Vidente: <Seer currentPlayer={currentPlayer} playerList={playerList} />,
+    Lobisomem: (
+      <WereWolf
+        currentPlayer={currentPlayer}
+        playerList={playerList}
+        currentGame={currentGame}
+      />
+    ),
+    Caçador: (
+      <Hunter
+        currentPlayer={currentPlayer}
+        playerList={playerList}
+        currentGame={currentGame}
+      />
+    ),
+  };
+
+  function passTurn() {
+    currentGame.passToNextPlayer();
+
+    if (currentGame.noNextPlayer()) {
+      currentGame.removePlayers();
+      currentGame.clearPlayersProtection();
+      setPreviousScreen("playerAction");
+      setScreen("villageNews");
+    } else {
+      setScreen("passToPlayer");
     }
+  }
 
-    function handlePassTurn() {
-        game.passToNextPlayer();
-
-        if (game.noNextPlayer()) {
-            game.removePlayers();
-            game.clearPlayersProtection();
-            setLastScreen('playerAction');
-            setScreen('villageNews');
-        } else {
-            setScreen('passToPlayer');
-        }
-    }
-
-    return (
-        <>
-            <h1>{currentPlayer.getRoleName()}</h1>
-            <h2>Escolha uma habilidade</h2>
-            {roleScreens[currentPlayer.getRoleName()]}
-            <button onClick={() => handlePassTurn()}>Terminar a vez</button>
-        </>
-    )
+  return (
+    <>
+      <h1>{currentPlayer.getRoleName()}</h1>
+      <h2>Escolha uma habilidade</h2>
+      {roleScreens[currentPlayer.getRoleName()]}
+      <button onClick={() => passTurn()}>Terminar a vez</button>
+    </>
+  );
 }

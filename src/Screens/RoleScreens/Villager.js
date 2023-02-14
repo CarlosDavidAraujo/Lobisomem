@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Villager({ game, playerList, currentPlayer }) {
+export default function Villager({ currentGame, playerList, currentPlayer }) {
     const [message, setMessage] = useState();
     const [skillWasUsed, setSkillWasUsed] = useState(false);
     const [playersToChoose, setPlayersToChoose] = useState(null);
@@ -8,7 +8,7 @@ export default function Villager({ game, playerList, currentPlayer }) {
 
     function handleBisbilhotar() {
         const villager = currentPlayer.getRole();
-        setMessage(villager.bisbilhotar(playerList, game));
+        setMessage(villager.bisbilhotar(playerList, currentGame));
         setSkillWasUsed(true);
     }
 

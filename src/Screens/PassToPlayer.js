@@ -1,25 +1,28 @@
-import { useContext, useState } from "react"
-import { GameContext } from "../Context/GameContext"
-
+import { useContext, useState } from "react";
+import { GameContext } from "../Context/GameContext";
 
 export default function PassToPlayer() {
-    const { game, setScreen } = useContext(GameContext);
-    const [ready, setReady] = useState(false);
+  const { currentGame, setScreen } = useContext(GameContext);
+  const [ready, setReady] = useState(false);
+  const currentPlayerName = currentGame.getCurrentPlayer().getName();
 
-    return (
+  return (
+    <>
+      {ready ? (
         <>
-            {ready ?
-                <>
-                    <h2>{game.getCurrentPlayer().getName()}</h2>
-                    <button onClick={() => setScreen('playerAction')}>Mostrar função</button>
-                </>
-                :
-                <>
-                    <h2>Passe para {game.getCurrentPlayer().getName()}</h2>
-                    <button onClick={() => setReady(true)}>Clique quando estiver pronto</button>
-                </>
-            }
-
+          <h2>{currentPlayerName}</h2>
+          <button onClick={() => setScreen("playerAction")}>
+            Mostrar função
+          </button>
         </>
-    )
+      ) : (
+        <>
+          <h2>Passe para {currentPlayerName}</h2>
+          <button onClick={() => setReady(true)}>
+            Clique quando estiver pronto
+          </button>
+        </>
+      )}
+    </>
+  );
 }

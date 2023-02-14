@@ -2,22 +2,24 @@ import { useContext, useState } from "react";
 import { GameContext } from "../Context/GameContext";
 
 export default function Votes() {
-  const { game, setScreen, setLastScreen } = useContext(GameContext);
-  const [currentPlayer, setCurrentPlayer] = useState(game.getCurrentPlayer());
+  const { currentGame, playerList, setScreen, setPreviousScreen } =
+    useContext(GameContext);
+  const [currentPlayer, setCurrentPlayer] = useState(
+    currentGame.getCurrentPlayer()
+  );
 
-  function handleVotes(player) {
+  function handleVote(player) {
     if (player) {
       player.addVote();
     }
 
-    game.passToNextPlayer();
-    setCurrentPlayer(game.getCurrentPlayer());
-    console.log(currentPlayer);
+    currentGame.passToNextPlayer();
+    setCurrentPlayer(currentGame.getCurrentPlayer());
 
-    if (game.noNextPlayer()) {
-      game.removeMostVotedPlayer();
-      game.clearPlayersVotes();
-      setLastScreen("votes");
+    if (currentGame.noNextPlayer()) {
+      currentGame.removeMostVotedPlayer();
+      currentGame.clearPlayersVotes();
+      setPreviousScreen("votes");
       setScreen("villageNews");
     }
   }
@@ -25,15 +27,15 @@ export default function Votes() {
   return (
     <>
       <div>
-        <h1>{currentPlayer.getName()} escolha seu voto</h1>
-        {game.getPlayers().map((player, i) => (
+        <h1>{currentPlayer.getName()}, escolha seu voto</h1>
+        {playerList.map((player, i) => (
           <>
-            <button onClick={() => handleVotes(player)}>
+            <button onClick={() => handleVote(player)}>
               {player.getName()}
             </button>
           </>
         ))}
-        <button onClick={() => handleVotes(null)}>Abster-se</button>
+        <button onClick={() => handleVote(null)}>Abster-se</button>
       </div>
     </>
   );
