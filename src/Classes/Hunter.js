@@ -6,6 +6,6 @@ export default class Hunter extends Role {
     }
 
     atirar(otherPlayer, game) {
-        game.addPlayersToRemove(otherPlayer);
+        game.addPlayerToRemove(otherPlayer);
     }
 }

@@ -6,6 +6,6 @@ export default class WereWolf extends Role {
     }
 
     devorar(otherPlayer, game) {
-        game.addPlayersToRemove(otherPlayer);
+        game.addPlayerToRemove(otherPlayer);
     }
 }

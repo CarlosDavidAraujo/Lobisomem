@@ -1,23 +1,23 @@
 export default class News {
-    constructor() {
-        this.news = [];
-    }
+  constructor() {
+    this.news = [];
+  }
 
-    getNews() {
-        return this.news;
-    }
+  getNews() {
+    return this.news;
+  }
 
-    setNews(message) {
-        this.news= [message];
-    }
+  setNews(message) {
+    this.news = [message];
+  }
 
-    addNews(message) {
-        if (!this.news.includes(message)) {
-            this.news.push(message);
-        }
+  addNews(message) {
+    if (!this.news.includes(message)) {
+      this.news.push(message);
     }
+  }
 
-    clearNews() {
-        this.news = [];
-    }
+  clearNews() {
+    this.news = [];
+  }
 }
