@@ -2,6 +2,22 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import ClassCard from "../Components/ClassCard";
 import { GameContext } from "../Context/GameContext";
+import bgImg from '../Images/playerSelection.png';
+
+const Container = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+
+  & img {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+  }
+`;
 
 const Grid = styled.div`
   display: grid;
@@ -59,8 +75,14 @@ export default function DefineRoles() {
     setScreen("passToPlayer");
   }
 
+  function returnToPreviousScreen() {
+    currentGame.clearPlayers();
+    setScreen("definePlayers")
+  }
+
   return (
-    <>
+    <Container>
+      <img src={bgImg} />
       {errorMessage && errorMessage} <br />
       Funções selecionadas
       <Grid>
@@ -85,7 +107,7 @@ export default function DefineRoles() {
         ))}
       </Grid>
       <button onClick={() => startGame()}>Confirmar</button>
-      <button onClick={() => setScreen("definePlayers")}>Voltar</button>
-    </>
+      <button onClick={() => returnToPreviousScreen()}>Voltar</button>
+    </Container>
   );
 }

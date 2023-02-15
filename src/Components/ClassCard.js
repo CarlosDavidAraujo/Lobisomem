@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import werewolfImg from '../Images/lobisomem.png';
 
 const Card = styled.div`
     aspect-ratio: 1/1;
-    background-color: grey;
+    background-color: #F5F5DC;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,8 +12,11 @@ const Card = styled.div`
 const ClassImg = styled.div`
     width: 70%;
     height: 70%;
-    border-radius: 50%;
-    background-color: black;
+    & img {
+        width: 70px;
+        height: 40px;
+        z-index: 1;
+    }
 `;
 
 const NumberControl = styled.div`
@@ -29,7 +33,8 @@ const NumberControl = styled.div`
 export default function ClassCard({roleName, count, onMinus, onPlus, onClick}) {
     return (
         <Card onClick={onClick}>
-            <ClassImg>         
+            <ClassImg>    
+                <img src={werewolfImg} />     
             </ClassImg>
             <h5>{roleName}</h5>
             <h5>{count}</h5>

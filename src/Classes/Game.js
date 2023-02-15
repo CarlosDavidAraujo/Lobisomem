@@ -34,6 +34,10 @@ export default class Game {
     });
   }
 
+  clearPlayers() { //limpa o array de <players>
+    this.players = []
+  }
+
   getCurrentPlayer() {
     //retorna o jogador atual da vez
     return this.players[this.currentPlayerIndex];
