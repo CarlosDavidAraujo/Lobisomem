@@ -1,22 +1,23 @@
-*, 
+*,
 *:after,
 *:before {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "New Rocker", cursive;
 }
 
-body{
-    font-size: 100%;
-    list-style-type: none;
+body {
+  font-size: 100%;
+  list-style-type: none;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 button {
-  font-family: 'New Rocker', cursive;
+  font-family: "New Rocker", cursive;
 }
