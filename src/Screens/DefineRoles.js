@@ -2,20 +2,24 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import ClassCard from "../Components/ClassCard";
 import { GameContext } from "../Context/GameContext";
-import bgImg from '../Images/playerSelection.png';
+import bgImg from "../Images/playerSelection.png";
+import villager from "../Images/villagerBlack.png";
+import seer from "../Images/seerBlack.png";
+import hunter from "../Images/hunterBlack.png";
+import werewolf from "../Images/werewolf.png";
+import { Button } from "../Components/Button";
 
 const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
+  padding: 0 20px;
   overflow: hidden;
-
-  & img {
-    position: absolute;
-    z-index: -1;
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
+  background-image: url(${bgImg});
+  background-repeat: no-repeat;
+  background-size: cover;
+  & h3 {
+    color: white;
   }
 `;
 
@@ -24,10 +28,15 @@ const Grid = styled.div`
   grid-template-columns: repeat(3, minmax(50px, 1fr));
   grid-column-gap: 10px;
   grid-row-gap: 10px;
-  padding: 10px;
 `;
 
 const allRoles = ["Aldeão", "Vidente", "Lobisomem", "Caçador"];
+const roleIcons = {
+  Aldeão: villager,
+  Vidente: seer,
+  Lobisomem: werewolf,
+  Caçador: hunter,
+};
 
 export default function DefineRoles() {
   const { currentGame, setScreen } = useContext(GameContext);
@@ -77,14 +86,13 @@ export default function DefineRoles() {
 
   function returnToPreviousScreen() {
     currentGame.clearPlayers();
-    setScreen("definePlayers")
+    setScreen("definePlayers");
   }
 
   return (
     <Container>
-      <img src={bgImg} />
       {errorMessage && errorMessage} <br />
-      Funções selecionadas
+      <h3>Funções selecionadas</h3>
       <Grid>
         {Object.keys(selectedRoles).map((roleName, i) => (
           <ClassCard
@@ -93,10 +101,11 @@ export default function DefineRoles() {
             count={selectedRoles[roleName]}
             onPlus={() => handleAddRoleCount(roleName)}
             onMinus={() => handleRemoveRoleCount(roleName)}
+            img={roleIcons[roleName]}
           />
         ))}
       </Grid>
-      Todas as funções
+      <h3>Todas as funções</h3>
       <Grid>
         {allRoles.map((role, i) => (
           <ClassCard
@@ -106,8 +115,8 @@ export default function DefineRoles() {
           />
         ))}
       </Grid>
-      <button onClick={() => startGame()}>Confirmar</button>
-      <button onClick={() => returnToPreviousScreen()}>Voltar</button>
+      <Button onClick={() => startGame()}>Confirmar</Button>
+      <Button onClick={() => returnToPreviousScreen()}>Voltar</Button>
     </Container>
   );
 }

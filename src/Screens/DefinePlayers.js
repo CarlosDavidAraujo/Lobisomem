@@ -3,38 +3,34 @@ import styled from "styled-components";
 import PlayerCard from "../Components/PlayerCard";
 import { GameContext } from "../Context/GameContext";
 import { Button, AddPlayerButton } from "../Components/Button";
-import bgImg from '../Images/playerSelection.png';
+import bgImg from "../Images/playerSelection.png";
 import PlusIcon from "../Components/PlusIcon";
 
 const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 0 20px;
   overflow: hidden;
-
-  & img {
-    position: absolute;
-    z-index: -1;
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-  }
+  background-image: url(${bgImg});
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
+const Header = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const Grid = styled.div`
   height: 80%;
   margin-top: 40px;
-  padding: 5%;
   display: grid;
   grid-template-columns: repeat(3, minmax(50px, 1fr));
   grid-auto-rows: 120px;
   grid-gap: 10px;
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
-
 
 export default function DefinePlayers() {
   const { currentGame, setScreen } = useContext(GameContext);
@@ -73,21 +69,23 @@ export default function DefinePlayers() {
   return (
     <Container>
       Adicione jogadores abaixo
-      <img src={bgImg} alt="pessoas reunidas numa floresta sombria" />
+      <Header>
+        <Button onClick={() => handleDefinePlayers()}>Confirmar</Button>
+      </Header>
       <Grid>
-        {players.map((player, i) =>
-          <PlayerCard player={player}
+        {players.map((player, i) => (
+          <PlayerCard
+            player={player}
             onChange={(e) => handlePlayerChange(e, i)}
             onClick={() => handleRemovePlayer(i)}
           />
-        )}
+        ))}
         <AddPlayerButton onClick={handleAddPlayer}>
           <PlusIcon />
           Adicionar jogador
         </AddPlayerButton>
       </Grid>
-      <Button onClick={() => handleDefinePlayers()}>Confirmar</Button>
       {errorMessage && <p>{errorMessage}</p>}
-    </Container >
+    </Container>
   );
 }
