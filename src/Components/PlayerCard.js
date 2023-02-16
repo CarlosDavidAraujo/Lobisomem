@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import PlusIcon from "./PlusIcon";
-import pena from "../Images/pena.png";
+import feather from "../Images/feather.png";
 
 const Card = styled.div`
   position: relative;
@@ -53,7 +53,7 @@ export default function PlayerCard({ player, onChange, onClick, placeholder }) {
   return (
     <Card>
       <Portrait>
-        <img src={pena} />
+        <img src={feather} />
       </Portrait>
       <Input
         value={player}

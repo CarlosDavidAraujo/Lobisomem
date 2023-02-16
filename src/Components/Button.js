@@ -28,4 +28,43 @@ const AddPlayerButton = styled.button`
   }
 `;
 
-export { Button, AddPlayerButton };
+const StyledSkillButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & button {
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    background-image: url(${props => props.icon});
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 2px solid black;
+    border-radius: 2px;
+    box-shadow: 2px 2px 0 0 black;
+  }
+
+  & button:active {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+  
+  & img {
+        width: 100%;
+    }
+`;
+
+function SkillButton({ label, icon, onClick }) {
+  return (
+    <StyledSkillButton icon={icon}>
+      <button onClick={onClick} />
+      <p>{label}</p>
+    </StyledSkillButton>
+  )
+}
+
+
+
+export { Button, AddPlayerButton, SkillButton };

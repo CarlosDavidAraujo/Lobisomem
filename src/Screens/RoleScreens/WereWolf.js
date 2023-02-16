@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useState } from "react";
+import werewolfImg from '../../Images/werewolf.png'
 
 export default function WereWolf({ currentGame, playerList, currentPlayer }) {
     const [skillWasUsed, setSkillWasUsed] = useState(false);
     const [skillWasChosen, setSkillWasChosen] = useState(false);
     const [targetPlayer, setTargetPlayer] = useState();
-    
+
 
     function handleDevorar() {
         const werewolf = currentPlayer.getRole();
@@ -22,6 +23,9 @@ export default function WereWolf({ currentGame, playerList, currentPlayer }) {
 
     return (
         <div>
+            <h1>{currentPlayer.getRoleName()}</h1>
+            <img src={werewolfImg} />
+            <h2>Escolha uma habilidade</h2>
             {!skillWasUsed &&
                 <div>
                     Clique em devorar para escolher o jogador que você quer eliminar esta noite, depois clique em confirmar e termine a vez.

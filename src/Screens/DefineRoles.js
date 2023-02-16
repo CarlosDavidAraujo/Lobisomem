@@ -3,9 +3,9 @@ import styled from "styled-components";
 import ClassCard from "../Components/ClassCard";
 import { GameContext } from "../Context/GameContext";
 import bgImg from "../Images/playerSelection.png";
-import villager from "../Images/villagerBlack.png";
-import seer from "../Images/seerBlack.png";
-import hunter from "../Images/hunterBlack.png";
+import villager from "../Images/villager.png";
+import seer from "../Images/seer.png";
+import hunter from "../Images/hunter.png";
 import werewolf from "../Images/werewolf.png";
 import { Button } from "../Components/Button";
 
@@ -13,7 +13,9 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
-  padding: 0 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   background-image: url(${bgImg});
   background-repeat: no-repeat;
@@ -28,6 +30,12 @@ const Grid = styled.div`
   grid-template-columns: repeat(3, minmax(50px, 1fr));
   grid-column-gap: 10px;
   grid-row-gap: 10px;
+`;
+
+const Footer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
 `;
 
 const allRoles = ["Aldeão", "Vidente", "Lobisomem", "Caçador"];
@@ -102,21 +110,25 @@ export default function DefineRoles() {
             onPlus={() => handleAddRoleCount(roleName)}
             onMinus={() => handleRemoveRoleCount(roleName)}
             img={roleIcons[roleName]}
+            selected={true}
           />
         ))}
       </Grid>
       <h3>Todas as funções</h3>
       <Grid>
-        {allRoles.map((role, i) => (
+        {allRoles.map((roleName, i) => (
           <ClassCard
-            onClick={() => handleAddRole(role)}
-            roleName={role}
+            onClick={() => handleAddRole(roleName)}
+            roleName={roleName}
             key={i}
+            img={roleIcons[roleName]}
           />
         ))}
       </Grid>
-      <Button onClick={() => startGame()}>Confirmar</Button>
-      <Button onClick={() => returnToPreviousScreen()}>Voltar</Button>
+      <Footer>
+        <Button onClick={() => returnToPreviousScreen()}>Voltar</Button>
+        <Button onClick={() => startGame()}>Confirmar</Button>
+      </Footer>
     </Container>
   );
 }

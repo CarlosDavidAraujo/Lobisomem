@@ -1,9 +1,25 @@
 import { useContext, useState } from "react";
 import { GameContext } from "../Context/GameContext";
+import styled from "styled-components";
 import Hunter from "./RoleScreens/Hunter";
 import Seer from "./RoleScreens/Seer";
 import Villager from "./RoleScreens/Villager";
 import WereWolf from "./RoleScreens/WereWolf";
+import { Button } from "../Components/Button";
+
+
+const Container = styled.div`
+  height: 100vh;
+  background-color: #f5deb3;
+  border: 5px solid black;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 20px;
+  overflow: hidden;
+`;
 
 export default function PlayerAction() {
   const { currentGame, playerList, setScreen, setPreviousScreen } =
@@ -50,11 +66,9 @@ export default function PlayerAction() {
   }
 
   return (
-    <>
-      <h1>{currentPlayer.getRoleName()}</h1>
-      <h2>Escolha uma habilidade</h2>
+    <Container>
       {roleScreens[currentPlayer.getRoleName()]}
-      <button onClick={() => passTurn()}>Terminar a vez</button>
-    </>
+      <Button onClick={() => passTurn()}>Terminar a vez</Button>
+    </Container>
   );
 }
